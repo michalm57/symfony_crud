@@ -1,44 +1,70 @@
-{# templates/contacts/index.html.twig #}
-
 {% extends 'base.html.twig' %}
 
-{% block title %}Contacts List
+{% block title %}Contacts List{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .create-button,
+        .send-emails-button {
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f2f2f2;
+        }
+        a {
+            margin-right: 5px;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
-	<h1>Contacts List</h1>
-
-	<a href="{{ path('app_contacts_create') }}">
-		<button class="create-button">Create New +</button>
-	</a>
-	<a href="{{ path('app_send_emails') }}">
-        <button class="send-emails-button">Send Emails to All Contacts</button>
-    </a>
-
-	<table>
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Firstname</th>
-				<th>Lastname</th>
-				<th>Email</th>
-				<th>Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for contact in contacts %}
-				<tr>
-					<td>{{ contact.id }}</td>
-					<td>{{ contact.firstname }}</td>
-					<td>{{ contact.lastname }}</td>
-					<td>{{ contact.email }}</td>
-					<td>
-						<a href="{{ path('app_contact', { 'id': contact.id }) }}">View</a>
-						<a href="{{ path('app_contact_edit', { 'id': contact.id }) }}">Edit</a>
-						<a href="{{ path('app_contact_delete', { 'id': contact.id }) }}" onclick="return confirm('Are you sure to remove this contact?')">Delete</a>
-					</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+    <div class="container">
+        <h1>Contacts List</h1>
+	<div class="mb-2">
+        <a href="{{ path('app_contacts_create') }}">
+            <button class="btn btn-primary">Create New +</button>
+        </a>
+        <a href="{{ path('app_send_emails') }}">
+            <button class="btn btn-secondary">Send Emails to All Contacts</button>
+        </a>
+	</div>
+        <table id="contacts-table" class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contact in contacts %}
+                    <tr>
+                        <td>{{ contact.id }}</td>
+                        <td>{{ contact.firstname }}</td>
+                        <td>{{ contact.lastname }}</td>
+                        <td>{{ contact.email }}</td>
+                        <td>
+                            <a href="{{ path('app_contact', { 'id': contact.id }) }}" class="btn btn-info">View</a>
+                            <a href="{{ path('app_contact_edit', { 'id': contact.id }) }}" class="btn btn-warning">Edit</a>
+                            <a href="{{ path('app_contact_delete', { 'id': contact.id }) }}" onclick="return confirm('Are you sure to remove this contact?')" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

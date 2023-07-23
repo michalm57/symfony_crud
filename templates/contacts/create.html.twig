@@ -5,47 +5,57 @@
 {% block title %}Create New Contact{% endblock %}
 
 {% block body %}
-    <h1>Create New Contact</h1>
+    <div class="container mt-4">
+        <h1 class="display-4 mb-4">Create New Contact</h1>
 
-    {{ form_start(form) }}
-    <div>
-        {{ form_label(form.firstname) }}
-        {{ form_widget(form.firstname) }}
-        {% if form.firstname.vars.errors|length %}
-            <div class="alert alert-danger">
-                {% for error in form.firstname.vars.errors %}
-                    {{ error.message }}
-                {% endfor %}
+        <div class="row">
+            <div class="col-lg-6">
+                {{ form_start(form) }}
+                <div class="form-group">
+                    {{ form_label(form.firstname) }}
+                    {{ form_widget(form.firstname, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.firstname.vars.errors|length %}
+                        <div class="alert alert-danger">
+                            {% for error in form.firstname.vars.errors %}
+                                {{ error.message }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.lastname) }}
+                    {{ form_widget(form.lastname, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.lastname.vars.errors|length %}
+                        <div class="alert alert-danger">
+                            {% for error in form.lastname.vars.errors %}
+                                {{ error.message }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.email.vars.errors|length %}
+                        <div class="alert alert-danger">
+                            {% for error in form.email.vars.errors %}
+                                {{ error.message }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create</button>
+                {{ form_end(form) }}
             </div>
-        {% endif %}
-    </div>
+        </div>
 
-    <div>
-        {{ form_label(form.lastname) }}
-        {{ form_widget(form.lastname) }}
-        {% if form.lastname.vars.errors|length %}
-            <div class="alert alert-danger">
-                {% for error in form.lastname.vars.errors %}
-                    {{ error.message }}
-                {% endfor %}
+        <div class="row mt-3">
+            <div class="col-lg-6">
+                <a href="{{ path('app_contacts') }}" class="btn btn-secondary">Back to list</a>
             </div>
-        {% endif %}
+        </div>
     </div>
-
-    <div>
-        {{ form_label(form.email) }}
-        {{ form_widget(form.email) }}
-        {% if form.email.vars.errors|length %}
-            <div class="alert alert-danger">
-                {% for error in form.email.vars.errors %}
-                    {{ error.message }}
-                {% endfor %}
-            </div>
-        {% endif %}
-    </div>
-
-    <button type="submit">Create</button>
-    {{ form_end(form) }}
-
-    <a href="{{ path('app_contacts') }}">Back to list</a>
 {% endblock %}
