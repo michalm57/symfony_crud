@@ -1,22 +1,33 @@
+{# templates/contacts/index.html.twig #}
+
 {% extends 'base.html.twig' %}
 
+{% block title %}Contacts List
+{% endblock %}
+
 {% block body %}
-<table>
-        <thead>
-            <tr>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for contact in contacts %}
-                <tr>
-                    <td>{{ contact.firstname }}</td>
-                    <td>{{ contact.lastname }}</td>
-                    <td>{{ contact.email }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+	<h1>Contacts List</h1>
+
+	<a href="{{ path('app_contacts_create') }}">
+		<button class="create-button">Create New +</button>
+	</a>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Firstname</th>
+				<th>Lastname</th>
+				<th>Email</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for contact in contacts %}
+				<tr>
+					<td>{{ contact.firstname }}</td>
+					<td>{{ contact.lastname }}</td>
+					<td>{{ contact.email }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 {% endblock %}
