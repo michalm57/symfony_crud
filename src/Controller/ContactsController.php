@@ -99,4 +99,20 @@ class ContactsController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/contacts/{id}/delete', name: 'app_contact_delete')]
+    public function delete(int $id): Response
+    {
+        $sql = "SELECT * FROM contacts WHERE id = :id";
+        $contact = $this->connection->fetchAssociative($sql, ['id' => $id]);
+
+        if (!$contact) {
+            throw $this->createNotFoundException('Kontakt nie został znaleziony.');
+        }
+
+        $deleteSql = "DELETE FROM contacts WHERE id = :id";
+        $this->connection->executeStatement($deleteSql, ['id' => $id]);
+
+        return $this->redirectToRoute('app_contacts');
+    }
 }

@@ -31,6 +31,8 @@
 					<td>{{ contact.email }}</td>
 					<td>
 						<a href="{{ path('app_contact', { 'id': contact.id }) }}">View</a>
+						<a href="{{ path('app_contact_edit', { 'id': contact.id }) }}">Edit</a>
+						<a href="{{ path('app_contact_delete', { 'id': contact.id }) }}" onclick="return confirm('Are you sure to remove this contact?')">Delete</a>
 					</td>
 				</tr>
 			{% endfor %}
