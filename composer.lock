@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "47db340197241d6b8e75126f619a94f5",
+    "content-hash": "03622156e3596e5dff21e484002cc6fb",
     "packages": [
         {
             "name": "doctrine/cache",
@@ -1385,6 +1385,58 @@
                 }
             ],
             "time": "2023-01-14T14:17:03+00:00"
+        },
+        {
+            "name": "emaillabs/emaillabs-php-api",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/emaillabs/emaillabs-php-api.git",
+                "reference": "4d1d5078c29e0d5aae8f50328351fa3dfe763452"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/emaillabs/emaillabs-php-api/zipball/4d1d5078c29e0d5aae8f50328351fa3dfe763452",
+                "reference": "4d1d5078c29e0d5aae8f50328351fa3dfe763452",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "1.1": "1.1-dev",
+                    "1.0.1": "1.0.1-dev",
+                    "1.0.2": "1.0.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "EmailLabs\\": "src/EmailLabs"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Marcin Kujawski",
+                    "email": "m.kujawski@emaillabs.pl"
+                },
+                {
+                    "name": "Mateusz Żyła",
+                    "email": "m.zyla@emaillabs.pl"
+                }
+            ],
+            "description": "EmailLabs library for PHP",
+            "support": {
+                "issues": "https://github.com/emaillabs/emaillabs-php-api/issues",
+                "source": "https://github.com/emaillabs/emaillabs-php-api/tree/master"
+            },
+            "time": "2018-08-13T11:49:35+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -9347,7 +9399,7 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,

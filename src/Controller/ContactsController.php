@@ -8,14 +8,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\ContactFormType;
 use Doctrine\DBAL\Connection;
+use App\Service\EmailLabs;
 
 class ContactsController extends AbstractController
 {
     private $connection;
+    private $emailLabsService;
 
-    public function __construct(Connection $connection)
+    public function __construct(Connection $connection, EmailLabs $emailLabsService)
     {
         $this->connection = $connection;
+        $this->emailLabsService = $emailLabsService;
     }
 
     #[Route('/contacts', name: 'app_contacts')]
@@ -54,7 +57,7 @@ class ContactsController extends AbstractController
     }
 
     #[Route('/contacts/{id}', name: 'app_contact')]
-    public function show(int $id): Response
+    public function show($id): Response
     {
         $sql = "SELECT * FROM contacts WHERE id = :id";
         $contact = $this->connection->fetchAssociative($sql, ['id' => $id]);
@@ -113,6 +116,13 @@ class ContactsController extends AbstractController
         $deleteSql = "DELETE FROM contacts WHERE id = :id";
         $this->connection->executeStatement($deleteSql, ['id' => $id]);
 
+        return $this->redirectToRoute('app_contacts');
+    }
+
+    #[Route('/contacts-send-emails', name: 'app_send_emails')]
+    public function sendEmails(): Response
+    {
+        //TODO: Add possibility to send emails
         return $this->redirectToRoute('app_contacts');
     }
 }
