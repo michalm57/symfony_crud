@@ -20,12 +20,11 @@ services:
     environment:
       - DB_HOST=database
   database:
-    image: mysql:latest
+    image: postgres:latest
     environment:
-      - MYSQL_DATABASE=symfony_crud
-      - MYSQL_USER=symfony_crud
-      - MYSQL_PASSWORD=password
-      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+      - POSTGRES_DB=symfony_crud
+      - POSTGRES_USER=symfony_crud
+      - POSTGRES_PASSWORD=password
     volumes:
       - "./db:/docker-entrypoint-initdb.d"
   phpmyadmin:
@@ -34,4 +33,4 @@ services:
       - 8080:80
     environment:
       - PMA_HOST=database
-      - PMA_PORT=3306
+      - PMA_PORT=5432
