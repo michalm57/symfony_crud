@@ -1,0 +1,18 @@
+{# templates/contacts/edit.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Contact{% endblock %}
+
+{% block body %}
+    <h1>Edit Contact</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.firstname) }}
+        {{ form_row(form.lastname) }}
+        {{ form_row(form.email) }}
+        <button type="submit">Save Changes</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_contacts') }}">Back to list</a>
+{% endblock %}

@@ -37,17 +37,17 @@ class ContactsController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-    
+
             $sql = "INSERT INTO contacts (firstname, lastname, email) VALUES (:firstname, :lastname, :email)";
             $this->connection->executeQuery($sql, [
                 'firstname' => $data['firstname'],
                 'lastname' => $data['lastname'],
                 'email' => $data['email'],
             ]);
-    
+
             return $this->redirectToRoute('app_contacts');
         }
-    
+
         return $this->render('contacts/create.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -65,6 +65,38 @@ class ContactsController extends AbstractController
 
         return $this->render('contacts/show.html.twig', [
             'contact' => $contact,
+        ]);
+    }
+
+    #[Route('/contacts/{id}/edit', name: 'app_contact_edit')]
+    public function edit(int $id, Request $request): Response
+    {
+        $sql = "SELECT * FROM contacts WHERE id = :id";
+        $contact = $this->connection->fetchAssociative($sql, ['id' => $id]);
+
+        if (!$contact) {
+            throw $this->createNotFoundException('Contact not found.');
+        }
+
+        $form = $this->createForm(ContactFormType::class, $contact);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            $updateSql = "UPDATE contacts SET firstname = :firstname, lastname = :lastname, email = :email WHERE id = :id";
+            $this->connection->executeStatement($updateSql, [
+                'id' => $id,
+                'firstname' => $data['firstname'],
+                'lastname' => $data['lastname'],
+                'email' => $data['email'],
+            ]);
+
+            return $this->redirectToRoute('app_contact', ['id' => $id]);
+        }
+
+        return $this->render('contacts/edit.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }
