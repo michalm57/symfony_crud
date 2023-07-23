@@ -27,10 +27,10 @@ services:
       - POSTGRES_PASSWORD=password
     volumes:
       - "./db:/docker-entrypoint-initdb.d"
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+  pgadmin:
+    image: dpage/pgadmin4
     ports:
-      - 8080:80
+      - 5050:80
     environment:
-      - PMA_HOST=database
-      - PMA_PORT=5432
+      - PGADMIN_DEFAULT_EMAIL=your_email@example.com
+      - PGADMIN_DEFAULT_PASSWORD=your_password
