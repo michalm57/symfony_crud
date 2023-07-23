@@ -8,14 +8,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\ContactFormType;
 use Doctrine\DBAL\Connection;
-use App\Service\EmailLabs;
+use App\Service\EmailLabsService;
 
 class ContactsController extends AbstractController
 {
     private $connection;
     private $emailLabsService;
 
-    public function __construct(Connection $connection, EmailLabs $emailLabsService)
+    public function __construct(Connection $connection, EmailLabsService $emailLabsService)
     {
         $this->connection = $connection;
         $this->emailLabsService = $emailLabsService;
@@ -110,7 +110,7 @@ class ContactsController extends AbstractController
         $contact = $this->connection->fetchAssociative($sql, ['id' => $id]);
 
         if (!$contact) {
-            throw $this->createNotFoundException('Kontakt nie został znaleziony.');
+            throw $this->createNotFoundException('Contact not found.');
         }
 
         $deleteSql = "DELETE FROM contacts WHERE id = :id";
@@ -122,7 +122,19 @@ class ContactsController extends AbstractController
     #[Route('/contacts-send-emails', name: 'app_send_emails')]
     public function sendEmails(): Response
     {
-        //TODO: Add possibility to send emails
+        $this->emailLabsService->setUrl(getenv('EMAIL_LABS_SEND_URL'));
+        $this->emailLabsService->setAppKey(getenv('EMAIL_LABS_APP_KEY'));
+        $this->emailLabsService->setSecretKey(getenv('EMAIL_LABS_SECRET_KEY'));
+
+        $sql = 'SELECT * FROM contacts';
+        $contacts = $this->connection->fetchAllAssociative($sql);
+
+        foreach ($contacts as $contact) {
+            $this->emailLabsService->setSubject('Example subject');
+            $this->emailLabsService->setContent("Example content");
+            $this->emailLabsService->send($contact['email']);
+        }
+
         return $this->redirectToRoute('app_contacts');
     }
 }
