@@ -2,15 +2,22 @@
 
 namespace App\Service;
 
-class EmailLabs
+class EmailLabsService
 {
-    private $apiKey;
+    private $appKey;
+    private $secretKey;
     private $subject;
     private $content;
+    private $url;
 
-    public function setApiKey(string $apiKey)
+    public function setAppKey(string $appKey)
     {
-        $this->apiKey = $apiKey;
+        $this->appKey = $appKey;
+    }
+
+    public function setSecretKey(string $secretKey)
+    {
+        $this->secretKey = base64_encode($secretKey);
     }
 
     public function setSubject(string $subject)
@@ -23,18 +30,23 @@ class EmailLabs
         $this->content = $content;
     }
 
+    public function setUrl(string $url)
+    {
+        $this->url = $url;
+    }
+
     public function send(string $email, string $subject = null, string $content = null)
     {
         //Initialization of CURL library
         $curl = curl_init();
 
         //Setting the address from which data will be collected
-        $url = "https://api.emaillabs.net.pl/api/sendmail_templates";
+        $url = $this->url;
 
         //Setting App Key
-        $appkey = $this->apiKey;
+        $appkey = $this->appKey;
         //Setting Secret Key
-        $secret = 'SECRET_KEY'; // You can set the secret key here
+        $secret = $this->secretKey;
 
         //Creating criteria of dispatch
         $data = [
@@ -52,7 +64,7 @@ class EmailLabs
             'subject' => $subject ?? $this->subject,
             'template_id' => 'template_id',
             'html' => $content ?? $this->content,
-            'from' => 'from@domain',
+            'from' => 'examplemail@gmail.com',
             'from_name' => 'My Company Name',
             'headers' => [
                 'x-header-1' => 'test-1',
