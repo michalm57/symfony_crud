@@ -1,0 +1,16 @@
+{# templates/contacts/show.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact Details{% endblock %}
+
+{% block body %}
+    <h1>Contact Details</h1>
+
+    <p><strong>ID:</strong> {{ contact.id }}</p>
+    <p><strong>Firstname:</strong> {{ contact.firstname }}</p>
+    <p><strong>Lastname:</strong> {{ contact.lastname }}</p>
+    <p><strong>Email:</strong> {{ contact.email }}</p>
+
+    <a href="{{ path('app_contacts') }}">Back to list</a>
+{% endblock %}

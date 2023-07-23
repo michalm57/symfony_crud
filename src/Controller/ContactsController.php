@@ -52,4 +52,19 @@ class ContactsController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/contacts/{id}', name: 'app_contact')]
+    public function show(int $id): Response
+    {
+        $sql = "SELECT * FROM contacts WHERE id = :id";
+        $contact = $this->connection->fetchAssociative($sql, ['id' => $id]);
+
+        if (!$contact) {
+            throw $this->createNotFoundException('Contact not found.');
+        }
+
+        return $this->render('contacts/show.html.twig', [
+            'contact' => $contact,
+        ]);
+    }
 }
