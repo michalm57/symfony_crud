@@ -7,19 +7,45 @@
 {% block body %}
     <h1>Create New Contact</h1>
 
-    <form method="post">
-        <label for="firstname">First Name:</label>
-        <input type="text" id="firstname" name="firstname" required>
-        <br>
+    {{ form_start(form) }}
+    <div>
+        {{ form_label(form.firstname) }}
+        {{ form_widget(form.firstname) }}
+        {% if form.firstname.vars.errors|length %}
+            <div class="alert alert-danger">
+                {% for error in form.firstname.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
 
-        <label for="lastname">Last Name:</label>
-        <input type="text" id="lastname" name="lastname" required>
-        <br>
+    <div>
+        {{ form_label(form.lastname) }}
+        {{ form_widget(form.lastname) }}
+        {% if form.lastname.vars.errors|length %}
+            <div class="alert alert-danger">
+                {% for error in form.lastname.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <br>
+    <div>
+        {{ form_label(form.email) }}
+        {{ form_widget(form.email) }}
+        {% if form.email.vars.errors|length %}
+            <div class="alert alert-danger">
+                {% for error in form.email.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
 
-        <button type="submit">Create</button>
-    </form>
+    <button type="submit">Create</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_contacts') }}">Back to list</a>
 {% endblock %}
